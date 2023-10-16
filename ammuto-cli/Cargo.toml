@@ -1,0 +1,9 @@
+[package]
+name = "ammuto-cli"
+version = "0.1.0"
+edition = "2021"
+description = "Allows Ammuto to be used inside the terminal. Mostly used for testing new features"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]

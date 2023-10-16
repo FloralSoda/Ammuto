@@ -1,0 +1,7 @@
+[workspace]
+members = [
+	"ammuto-lib",
+	"ammuto-client",
+	"ammuto-client/src-tauri",
+	"ammuto-cli"
+]
