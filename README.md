@@ -8,7 +8,7 @@ and niches where these solutions don't provide.
 ## Features
 * Providing a local environment to host your data, instead of having to set up an entire
     home server just for organisation.
-* A responsive, modern UI build using Tauri/Yew and Rust.
+* A responsive, modern UI built using Tauri/Yew and Rust.
 * A plug and play solution for hosting servers, so that anyone with an internet connection can host their
      own Ammuto server.
 * Giving total plugin support, as well as plugin mismatch support, such that a client or server can host 
