@@ -8,7 +8,7 @@ use serde::{Deserialize, Serialize};
 ///The origins of the contents. Could be a website, local file, physical place or unknown
 #[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-enum Origin {
+pub enum Origin {
 	Unknown,
 	Simple(String),
 	Web(String),
@@ -18,14 +18,14 @@ enum Origin {
 /// A file stored within the database.
 #[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-struct Entry {
+pub struct FileEntry {
 	filetype: String,
 	id: uuid::Uuid,
     date: Option<u64>,
 	location: Origin,
 	tags: Vec<uuid::Uuid>
 }
-impl Entry {
+impl FileEntry {
 	fn get_current_time() -> Option<u64> {
 		match SystemTime::now().duration_since(UNIX_EPOCH) {
 			Ok(duration) => Some(duration.as_secs()),
@@ -38,12 +38,12 @@ impl Entry {
 			let date = match data.created() {
 				Ok(time) => match time.duration_since(UNIX_EPOCH) {
 					Ok(duration) => Some(duration.as_secs()),
-                    Err(_) => Entry::get_current_time(),
+                    Err(_) => FileEntry::get_current_time(),
 				},
-				Err(_) => Entry::get_current_time()
+				Err(_) => FileEntry::get_current_time()
 			};
 
-			Entry {
+			FileEntry {
 				filetype,
                 id: uuid::Uuid::new_v4(),
                 date,
@@ -51,10 +51,10 @@ impl Entry {
                 tags: Vec::new()
 			}
 		} else {
-			Entry {
+			FileEntry {
 				filetype,
                 id: uuid::Uuid::new_v4(),
-                date: Entry::get_current_time(),
+                date: FileEntry::get_current_time(),
                 location: from,
                 tags: Vec::new()
 			}
