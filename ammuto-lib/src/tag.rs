@@ -2,9 +2,12 @@
 
 use std::collections::HashMap;
 
-use serde::{Serialize, ser::SerializeMap, Deserialize};
+#[cfg(feature = "serde")]
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+/// Represents a key term that can be linked to a file
+#[derive(Debug, Clone)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Tag {
 	uuid: uuid::Uuid,
 	display_name: String,
@@ -41,7 +44,9 @@ impl Tag {
 		self.aliases_to = alias_to;
 	}
 }
-#[derive(Debug, Clone, Serialize, Deserialize)]
+/// Represents a collection of tags, allowing for more coherent display and efficient searching
+#[derive(Debug, Clone)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Group {
 	name: String,
     tags: Vec<uuid::Uuid>

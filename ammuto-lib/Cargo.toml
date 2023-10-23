@@ -8,6 +8,12 @@ description = "The core functionality of Ammuto. Any and all Ammuto clients and 
 
 [dependencies]
 json5 = "0.4.1"
-serde = { version = "1.0.189", features = [ "derive" ] }
+serde = { version = "1.0.189", features = [ "derive" ], optional = true }
 sqlite = "0.31.1"
-uuid = { version = "1.5.0", features = [ "serde" ] }
+uuid = { version = "1.5.0", features = [ "serde", "v4" ] }
+
+[features]
+# By default, no database implementation is provided, so that the developer may choose to provide their own.
+sqlite = [] # Uses SQLite as the database storage medium. Faster and more stable, but requires conversion to transport
+json = [ "serde" ] # Uses JSON5 as the database storage medium. Slower and may have bugs, but uses a more portable format
+serde = [ "dep:serde", "uuid/serde" ]

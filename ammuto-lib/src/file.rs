@@ -2,11 +2,22 @@
 
 use std::{fs::File, time::{SystemTime, UNIX_EPOCH}};
 
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
+
+///The origins of the contents. Could be a website, local file, physical place or unknown
+#[derive(Debug, Clone)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 enum Origin {
 	Unknown,
-	Simple(String)
+	Simple(String),
+	Web(String),
+    File(String),
+	Physical // TODO: Represent physical locations somehow.
 }
-
+/// A file stored within the database.
+#[derive(Debug, Clone)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 struct Entry {
 	filetype: String,
 	id: uuid::Uuid,
