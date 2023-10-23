@@ -7,3 +7,4 @@ description = "Allows Ammuto to be used inside the terminal. Mostly used for tes
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+ammuto-lib = { path = "../ammuto-lib", version = "0.1.0" }
