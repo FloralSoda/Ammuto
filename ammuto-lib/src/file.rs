@@ -5,6 +5,8 @@ use std::{fs::File, time::{SystemTime, UNIX_EPOCH}};
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
+use crate::connection::DatabaseProperty;
+
 ///The origins of the contents. Could be a website, local file, physical place or unknown
 #[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -19,11 +21,11 @@ pub enum Origin {
 #[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct FileEntry {
-	filetype: String,
-	id: uuid::Uuid,
-    date: Option<u64>,
-	location: Origin,
-	tags: Vec<uuid::Uuid>
+	filetype: DatabaseProperty<String>,
+	id: DatabaseProperty<uuid::Uuid>,
+    date: DatabaseProperty<Option<u64>>,
+	location: DatabaseProperty<Origin>,
+	tags: DatabaseProperty<Vec<uuid::Uuid>>
 }
 impl FileEntry {
 	fn get_current_time() -> Option<u64> {
@@ -44,20 +46,30 @@ impl FileEntry {
 			};
 
 			FileEntry {
-				filetype,
-                id: uuid::Uuid::new_v4(),
-                date,
-                location: from,
-                tags: Vec::new()
+				filetype: DatabaseProperty::new(String::from("filetype"), filetype),
+                id: DatabaseProperty::new(String::from("id"), uuid::Uuid::new_v4()),
+                date: DatabaseProperty::new(String::from("date"), date),
+                location: DatabaseProperty::new(String::from("location"), from),
+				..Default::default()
 			}
 		} else {
 			FileEntry {
-				filetype,
-                id: uuid::Uuid::new_v4(),
-                date: FileEntry::get_current_time(),
-                location: from,
-                tags: Vec::new()
+				filetype: DatabaseProperty::new(String::from("filetype"),filetype),
+                id: DatabaseProperty::new(String::from("id"),uuid::Uuid::new_v4()),
+                location: DatabaseProperty::new(String::from("location"),from),
+				..Default::default()
 			}
 		}
 	}
+}
+impl Default for FileEntry {
+    fn default() -> Self {
+        Self { 
+			filetype: DatabaseProperty::new(String::from("filetype"), String::from("GENERIC")), 
+			id: DatabaseProperty::new(String::from("id"), Default::default()),  
+			date: DatabaseProperty::new(String::from("date"), FileEntry::get_current_time()), 
+			location: DatabaseProperty::new(String::from("location"), Origin::Unknown),  
+			tags: DatabaseProperty::new(String::from("tags"), Default::default()) 
+		}
+    }
 }
