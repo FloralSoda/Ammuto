@@ -7,3 +7,6 @@ description = "The core functionality of Ammuto. Any and all Ammuto clients and 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+json5 = "0.4.1"
+serde = { version = "1.0.189", features = [ "derive" ] }
+uuid = { version = "1.5.0", features = [ "serde" ] }
