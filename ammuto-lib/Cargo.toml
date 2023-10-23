@@ -9,4 +9,5 @@ description = "The core functionality of Ammuto. Any and all Ammuto clients and 
 [dependencies]
 json5 = "0.4.1"
 serde = { version = "1.0.189", features = [ "derive" ] }
+sqlite = "0.31.1"
 uuid = { version = "1.5.0", features = [ "serde" ] }
